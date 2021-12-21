@@ -1,0 +1,11 @@
+all: 
+  children:
+     nginx1:
+         hosts:
+            192.168.9.204
+     nginx2:
+         hosts:
+            192.168.9.205
+     nginx3:
+         hosts:
+            192.168.9.206
