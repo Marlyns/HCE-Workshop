@@ -1,0 +1,5 @@
+- name: install Haproxy & Keepalived
+  hosts: load2
+  become: yes
+  roles:
+    - slave
