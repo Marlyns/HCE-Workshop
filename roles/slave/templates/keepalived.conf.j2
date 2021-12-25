@@ -19,7 +19,7 @@ vrrp_instance VI_1 {
         auth_pass PA$$WO10
     }
     virtual_ipaddress {
-        192.168.9.100/32 brd 192.168.9.255 scope global              # the virtual IP
+        192.168.9.100              # the virtual IP
     }
     track_script {
         reload_haproxy
