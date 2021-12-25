@@ -1,0 +1,54 @@
+- name: Install, configure Laod Balancering & High Availibility
+  apt:
+    name:
+       - haproxy
+       - keepalived
+       - firewalld
+    state : present
+    update_cache: yes
+    cache_valid_time: 3600
+  become: yes
+
+- name: "Copying configuration haproxy "
+  template:
+        src: "haproxy.cfg.j2"
+        dest: "/etc/haproxy/haproxy.cfg"
+
+- name: "Copying configuration keepalived "
+  template:
+        src: "keepalived.conf.j2"
+        dest: "/etc/keepalived/keepalived.conf"
+
+- name: permit traffic in default
+  ansible.posix.firewalld:
+    service: http
+    permanent: yes
+    state: enabled
+
+- name: permit traffic in default
+  ansible.posix.firewalld:
+    port: 5000/tcp
+    permanent: yes
+    state: enabled
+
+- name: Restart service firewall
+  service:
+     name: "firewalld"
+     state: restarted
+     enabled: yes
+  become: yes
+
+- name: Restart service haproxy
+  service:
+     name: "haproxy"
+     state: restarted
+     enabled: yes
+  become: yes
+
+- name: Restart service keepalived
+  service:
+     name: "keepalived"
+     state: restarted
+     enabled: yes
+  become: yes
+ 

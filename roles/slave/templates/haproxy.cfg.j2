@@ -1,0 +1,39 @@
+#HAproxy configuration
+global
+     log /dev/log local0 debug
+     chroot /var/lib/haproxy
+     stats timeout 30s
+     user haproxy
+     group haproxy
+     daemon
+
+defaults
+     log global
+     mode http
+     option httplog
+     option dontlognull
+     timeout connect 5000
+     timeout client 50000
+     timeout server 50000
+
+listen stats
+     bind *:5000
+     mode http
+     stats enable
+     stats uri /stats
+     stats refresh 5s
+     stats auth marlyns:root2021
+     stats show-legends
+
+frontend nginx_front
+     description Front de LoadBalancer
+     bind *:80
+     mode http
+     default_backend nginx_load
+
+backend nginx_load
+     description Backend de LoadBalancer
+     balance roundrobin
+     server nginx1 192.168.9.103:80 check
+     server nginx1 192.168.9.104:80 check
+     server nginx3 192.168.9.105:80 check
