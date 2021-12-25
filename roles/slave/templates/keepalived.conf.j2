@@ -11,7 +11,7 @@ vrrp_instance VI_1 {
     #Interval de check
     advert_int 1
     # Interface de synchro entre les LB
-    lvs_sync_daemon_interface eth0
+    #lvs_sync_daemon_interface eth0
     interface eth0                # interface to monitor
     # Authentication 
     authentication {
@@ -19,7 +19,7 @@ vrrp_instance VI_1 {
         auth_pass PA$$WO10
     }
     virtual_ipaddress {
-        192.168.9.100              # the virtual IP
+        192.168.9.110              # the virtual IP
     }
     track_script {
         reload_haproxy
